@@ -1,0 +1,24 @@
+# Starter Dockerfile for the Premium Tier job container.
+#
+# This Dockerfile builds a container image for running classification jobs
+# in the 'premium-service' namespace. It installs dependencies, preloads data,
+# and pretrains models. 
+# Students may modify this file to change the job behavior or add new dependencies.
+
+
+# TODO: Specify a Python base image
+
+# TODO: Set the working directory
+
+# TODO: Copy model and source files into the image (from /mp12_microarch_twotier_starter/model_config/ directory)
+
+# TODO: Install Python dependencies
+
+# TODO: Create directories for models and data
+
+# TODO: Preload data and pretrain models
+
+# TODO: Expose the required port
+
+# TODO: Specify the default command to run the classification script
+CMD ["python", "classify.py"]
