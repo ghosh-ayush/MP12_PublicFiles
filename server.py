@@ -4,9 +4,18 @@ from os import path
 import yaml, random, string, json
 import sys
 import json
+from kubernetes.config.config_exception import ConfigException
+
 
 # Configs can be set in Configuration class directly or using helper utility
-config.load_kube_config()
+#config.load_kube_config()
+try:
+    config.load_incluster_config()
+    print("✅ Loaded in-cluster Kubernetes config")
+except ConfigException:
+    kube_cfg = os.environ.get("KUBECONFIG", os.path.expanduser("~/.kube/config"))
+    config.load_kube_config(config_file=kube_cfg)
+    print(f"✅ Loaded local kubeconfig from {kube_cfg}")
 v1 = client.CoreV1Api()
 app = Flask(__name__)
 # app.run(debug = True)

@@ -1,29 +1,29 @@
 FROM python:3.6
 
-# Creating Application Source Code Directory
-RUN ...
+WORKDIR /usr/src/app
 
-# Setting Home Directory for containers
-WORKDIR ...
+# 1) Install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy src python files
-COPY ...
+# 2) Copy your code
+COPY classify.py data_preload.py models.py server.py train.py utils.py test.py ./
 
-# Installing python dependencies
-RUN ...
+# 3) Prepare folders
+RUN mkdir -p data models
 
-# create directories for models and data
-RUN ...
-RUN ...
+# 4) Download the data
+RUN python data_preload.py
 
-# Preload the data
-RUN ...
+# 5) Train the free service model (feed-forward on MNIST)
+ENV DATASET=mnist
+ENV TYPE=ff
+RUN python train.py
 
-# Pretrain the models
-RUN ...
-RUN ...
-RUN ...
-RUN ...
+# 6) Train the premium service model (CNN on KMNIST)
+ENV DATASET=kmnist
+ENV TYPE=cnn
+RUN python train.py
 
-# Running Python Application
-CMD ...
+# 7) At runtime, launch your server
+CMD ["python", "server.py"]
