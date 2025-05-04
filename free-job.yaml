@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: free-job-
+  namespace: free-service
+spec:
+  template:
+    spec:
+      containers:
+      - name: classifier
+        image: ayushghoshdocker/mp12_image:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DATASET
+          value: "mnist"
+        - name: TYPE
+          value: "ff"
+        resources:
+          requests:
+            cpu: "0.9"
+          limits:
+            cpu: "0.9"
+      restartPolicy: Never

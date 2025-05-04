@@ -1,0 +1,33 @@
+# cluster-config.yaml
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mp12-cluster
+  region: us-east-1
+
+availabilityZones:
+  - us-east-1a
+  - us-east-1b
+
+vpc:
+  # let eksctl create a new VPC with public/private subnets
+  nat:
+    gateway: HighlyAvailable
+
+nodeGroups:
+  - name: workers
+    instanceType: t2.medium
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 2
+    ssh:
+      allow: true
+      publicKeyName: mp12-key
+    labels:
+      role: worker
+    tags:
+      nodegroup-role: worker
+    iam:
+      withAddonPolicies:
+        autoScaler: true

@@ -1,0 +1,13 @@
+# free-limitrange.yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-limitrange
+  namespace: free-service
+spec:
+  limits:
+  - type: Container
+    defaultRequest:
+      cpu: "0.9"
+    default:
+      cpu: "0.9"

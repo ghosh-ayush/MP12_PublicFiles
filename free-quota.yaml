@@ -1,0 +1,10 @@
+# free-quota.yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: free-quota
+  namespace: free-service
+spec:
+  hard:
+    requests.cpu: "2"    # sum of all CPU requests ≤ 2
+    limits.cpu:   "2"    # sum of all CPU limits   ≤ 2

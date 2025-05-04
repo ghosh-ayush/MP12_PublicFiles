@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: premium-job-
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: classifier
+        image: ayushghoshdocker/mp12_image:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DATASET
+          value: "kmnist"
+        - name: TYPE
+          value: "cnn"
+        resources:
+          requests:
+            cpu: "0.9"
+          limits:
+            cpu: "0.9"
+      restartPolicy: Never
